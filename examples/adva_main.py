@@ -7,8 +7,10 @@ from collections import OrderedDict
 
 # import math as m
 
-from gisaxs.common  import xp, array_type
-from gisaxs.ff import cone, cone_shell
+from gisaxs.common import xp
+from gisaxs.common import array_type
+from gisaxs.ff import cone
+from gisaxs.ff import cone_shell
 from gisaxs import propagation_coeffs
 from gisaxs import structure_factor
 from gisaxs import qspace
