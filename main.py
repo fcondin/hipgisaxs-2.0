@@ -38,11 +38,12 @@ def build_output(output_file):
     output = Output(**output_dict)  # TODO: implement Output as a NamedTuple or similar
     return output
 
+
 def setup_experiment(instrument, sample, output):
     # pass in either instrument object or instrument file
     if isinstance(instrument, str):
         instrument = build_instrument(instrument)
-    ... # same for sample, output
+    ...  # same for sample, output
 
     experiment = Experiment(instrument, sample, output)
 

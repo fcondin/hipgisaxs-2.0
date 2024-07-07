@@ -8,6 +8,7 @@ except ImportError:
     import numpy as np
     from numpy import cos, sin
 
+
 class Detector:
     """
     Detector class to define the detector geometry. 
@@ -97,8 +98,6 @@ class Detector:
         wavelen = 1230.94 / energy
         q = self.qvectors(sdd, center, wavelen)
         return np.linalg.norm(q, axis=1)
-
-
 
     """
     Calculate the q-vectors, including the four qz-components, for the experimental geometry.
