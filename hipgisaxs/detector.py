@@ -22,11 +22,10 @@ class Detector:
         self.pixle_size = pixle_size
 
     @classmethod
-    """
-    Create a detector object from the JSON object.
-    """
-    
     def from_dict(cls, det):
+        """
+        Create a detector object from the JSON object.
+        """
         n = det['name'] 
         rows = det['pixel_rows']
         cols = det['pixel_cols']
