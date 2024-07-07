@@ -7,14 +7,14 @@ from collections import OrderedDict
 
 # import math as m
 
-from gisaxs.common import xp
-from gisaxs.common import array_type
-from gisaxs.ff import cone
-from gisaxs.ff import cone_shell
-from gisaxs import propagation_coeffs
-from gisaxs import structure_factor
-from gisaxs import qspace
-from gisaxs import plot
+from hipgisaxs.common import xp
+# from hipgisaxs.common import array_type
+from hipgisaxs.ff import cone
+# from hipgisaxs.ff import cone_shell
+from hipgisaxs import propagation_coeffs
+# from hipgisaxs import structure_factor
+from hipgisaxs import qspace
+from hipgisaxs import plot
 
 if __name__ == '__main__':
 
