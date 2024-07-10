@@ -1,13 +1,9 @@
 from abc import ABC
-
-try:
-    import cupy as np
-except ImportError:
-    import numpy as np
+import numpy as np
 
 import warnings
 
-from .ff import cuboid, cone, cone_stack, cone_shell, cylinder, sphere
+from .ff import cuboid, cone, cylinder, sphere
 
 try:
     from .ff import MeshFF
@@ -15,9 +11,6 @@ except ImportError:
     warnings.warn('failed to import meshff, required for triangulated structures', stacklevel=2)
 
 # cone.py  cuboid.py  cylinder.py  sphere.py
-
-_baseVars = ['delta', 'beta', 'locations', 'orient']
-
 
 def makeShapeObject(shape):
     fftype = shape.pop('formfactor')
@@ -82,20 +75,24 @@ class Unitcell:
         return ff
 
 
-# ----basic shapes------#
-class Cyliner:
-    def __init__(self):
-        pass
+# ----base shapes------#
+class Cyliner(ShapeBase):
+    def __init__(self, *args, radius, height, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.radius = radius
+        self.height = height
 
-        # calculate form-factor
-
+    # calculate form-factor
     def ff(self, qx, qy, qz):
         return cylinder(qx, qy, qz, self.radius, self.height, self.orient)
 
 
-class Cuboid:
-    def __init__(self):
-        pass
+class Cuboid(ShapeBase):
+    def __init__(self, *args, length, width, height, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.length = length
+        self.width = width
+        self.height = height
 
         # calculate form-factor
 
@@ -115,35 +112,19 @@ class Cone(ShapeBase):
         return cone(qx, qy, qz, self.radius, self.height, self.angle, self.orient)
 
 
-class Sphere:
-    def __init__(self):
-        pass
+class Sphere(ShapeBase):
+    def __init__(self, *args, radius, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.radius = radius
 
     # calculate form-factor
     def ff(self, qx, qy, qz):
         return sphere(qx, qy, qz, self.radius)
 
-
-class ConeStack:
-    def __init__(self):
-        pass
-
-    def ff(self, qx, qy, qz):
-        return cone_stack(qx, qy, qz, self.radius, self.height, self.angles, self.orient)
-
-
-class ConeShell:
-    def __init__(self):
-        pass
-
-    def ff(self, qx, qy, qz):
-        return cone_shell(qx, qy, qz, self.outer_radius, self.inner_radius, self.height, self.outer_angle,
-                          self.inner_angle, self.orient)
-
-
-class MeshFT:
-    def __init__(self):
-        pass
+class MeshFT(ShapeBase):
+    def __init__(self, *args, meshfile, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.meshfile = meshfile
 
     def ff(self, qx, qy, qz):
         from stl import mesh
