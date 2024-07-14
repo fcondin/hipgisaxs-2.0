@@ -5,7 +5,7 @@ except ImportError:
 
 import warnings
 
-from .ff import  cuboid, cone, cone_stack, cone_shell, cylinder, sphere, trapezoid, trapezoid_stack
+from .ff import cuboid, cone, cone_stack, cone_shell, cylinder, sphere, trapezoid, trapezoid_stack
 
 try:
     from .ff import MeshFF
@@ -16,6 +16,7 @@ except ImportError:
 # cone.py  cuboid.py  cylinder.py  sphere.py
 
 _baseVars = ['delta', 'beta', 'locations', 'orient']
+
 
 def makeShapeObject(shape):
     fftype = shape['formfactor']
@@ -51,6 +52,7 @@ def makeShapeObject(shape):
             setattr(ob, name, None)
     return ob
 
+
 class CoreShell:
     def __init__(self, shape):
         self.core = makeShapeObject(shape['Core'])
@@ -66,6 +68,7 @@ class CoreShell:
         refidx_shell = 2 * complex(self.shell.delta, self.shell.beta)
         return (ff_shell + (refidx_core-refidx_shell) * ff_core)
          
+
 class Unitcell:
     def __init__(self, shapes, delta = 0, beta = 0):
 

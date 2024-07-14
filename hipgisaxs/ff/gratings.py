@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 def trapezoid(qy, qz, y1, y2, langle, rangle, h):
     m1 = np.tan(langle)
     m2 = np.tan(np.pi - rangle)
@@ -34,6 +35,7 @@ def trapezoid_stack(qy, qz, y1, y2, height, langle, rangle=None):
         y1 += height / m1
         y2 += height / m2 
     return ff
+
 
 if __name__ == '__main__':
     qp = 0.125

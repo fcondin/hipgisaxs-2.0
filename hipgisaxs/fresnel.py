@@ -6,6 +6,7 @@ try:
 except ImportError:
     import numpy as np 
 
+
 def propagation_coeffs(alphai, alpha, reflectivity_index):
     """ Calculate the reflection and transmission coefficients of a dielectric interface.
     Parameters:
@@ -26,5 +27,3 @@ def propagation_coeffs(alphai, alpha, reflectivity_index):
     kt = np.sqrt(np.sin(alpha)**2 - dns2)
     Rf = (kz-kt)/(kz+kt)
     return [1, Ri, Rf, Ri*Rf]
-
-
