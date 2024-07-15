@@ -1,12 +1,11 @@
-
 # This file contains the Detector class which is used to define the detector
 
 try:
     import cupy as np
-    from cupy import cos, sin
+    # from cupy import cos, sin
 except ImportError:
     import numpy as np
-    from numpy import cos, sin
+    # from numpy import cos, sin
 
 
 class Detector:
@@ -75,9 +74,9 @@ class Detector:
         k0 = 2 * np.pi / wavelen
 
         # q-vector
-        qx = k0 * (cos(alpha) * cos(theta) - 1)
-        qy = k0 * (cos(alpha) * sin(theta))
-        qz = k0 * (sin(alpha))
+        qx = k0 * (np.cos(alpha) * np.cos(theta) - 1)
+        qy = k0 * (np.cos(alpha) * np.sin(theta))
+        qz = k0 * (np.sin(alpha))
         return qx, qy, qz
 
     def qvalues(self, sdd, center, energy):
@@ -119,10 +118,10 @@ class Detector:
         k0 = 2 * np.pi / wavelen
 
         # q-vector
-        qx = k0 * (cos(alpha) * cos(theta) - cos(alphai))
-        qy = k0 * (cos(alpha) * sin(theta))
-        kzf = k0 * sin(alpha)
-        kzi = -k0 * sin(alphai)
+        qx = k0 * (np.cos(alpha) * np.cos(theta) - np.cos(alphai))
+        qy = k0 * (np.cos(alpha) * np.sin(theta))
+        kzf = k0 * np.sin(alpha)
+        kzi = -k0 * np.sin(alphai)
 
         # (Ti, Tf)
         q1 = kzf - kzi
