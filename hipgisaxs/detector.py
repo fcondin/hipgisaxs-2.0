@@ -8,6 +8,7 @@ except ImportError:
     import numpy as np
     from numpy import cos, sin
 
+
 class Detector:
     """
     Detector class to define the detector geometry. 
@@ -21,25 +22,24 @@ class Detector:
         self.pixle_size = pixle_size
 
     @classmethod
-    """
-    Create a detector object from the JSON object.
-    """
-    
     def from_dict(cls, det):
+        """
+        Create a detector object from the JSON object.
+        """
         n = det['name'] 
         rows = det['pixel_rows']
         cols = det['pixel_cols']
         pixel = det['pixel_size']
         return cls(n, [rows, cols], pixel)        
 
-    """
-    Calculate the angles from the center of the sample to the detector.
-    
-    Parameters:
-        sdd: sample to detector distance
-        center: center of beam on the detector
-    """
     def angles(self, sdd, center):
+        """
+        Calculate the angles from the center of the sample to the detector.
+
+        Parameters:
+            sdd: sample to detector distance
+            center: center of beam on the detector
+        """
         nrow = self.shape[0]
         ncol = self.shape[1]
         y, x = np.mgrid[0:nrow, 0:ncol]
@@ -54,19 +54,18 @@ class Detector:
         alpha = np.arctan2(y, tmp)
         return theta, alpha
 
-    """
-    Calculate the q-vectors for the detector.
-
-    Parameters:
-        sdd: sample to detector distance
-        center: center of beam on the detector
-        energy: energy of the x-ray
-
-    Returns:
-        qx, qy, qz: q-vectors for the detector
-    """
     def qvectors(self, sdd, center, energy):
+        """
+        Calculate the q-vectors for the detector.
 
+        Parameters:
+            sdd: sample to detector distance
+            center: center of beam on the detector
+            energy: energy of the x-ray
+
+        Returns:
+            qx, qy, qz: q-vectors for the detector
+        """
         wavelen = 1.23094e+03 / energy
         theta, alpha = self.angles(sdd, center)
         theta = theta.ravel()
@@ -81,39 +80,35 @@ class Detector:
         qz = k0 * (sin(alpha))
         return qx, qy, qz
 
-    """
-    Calculate the q-values for the detector.
-
-    Parameters:
-        sdd: sample to detector distance
-        center: center of beam on the detector
-        energy: energy of the x-ray
-
-    Returns:
-        q: q-values for the detector
-    """
     def qvalues(self, sdd, center, energy):
+        """
+        Calculate the q-values for the detector.
 
+        Parameters:
+            sdd: sample to detector distance
+            center: center of beam on the detector
+            energy: energy of the x-ray
+
+        Returns:
+            q: q-values for the detector
+        """
         wavelen = 1230.94 / energy
         q = self.qvectors(sdd, center, wavelen)
         return np.linalg.norm(q, axis=1)
 
-
-
-    """
-    Calculate the q-vectors, including the four qz-components, for the experimental geometry.
-
-    Parameters:
-        sdd: sample to detector distance
-        center: center of beam on the detector
-        energy: energy of the x-ray
-        alphai: incident angle
-
-    Returns:
-        qx, qy, [qz1...qz4]: q-vectors for the detector
-    """
     def dwba_qvectors(self, sdd, center, energy, alphai):
+        """
+        Calculate the q-vectors, including the four qz-components, for the experimental geometry.
 
+        Parameters:
+            sdd: sample to detector distance
+            center: center of beam on the detector
+            energy: energy of the x-ray
+            alphai: incident angle
+
+        Returns:
+            qx, qy, [qz1...qz4]: q-vectors for the detector
+        """
         theta, alpha = self.angles(sdd, center)
         theta = theta.ravel()
         alpha = alpha.ravel()
