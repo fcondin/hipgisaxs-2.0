@@ -4,7 +4,7 @@ import h5py
 
 
 def main():
-    path_to_hf_file = r'../gisaxs.h5'
+    path_to_hf_file = r'result.h5'
     # f = h5py.File(r'cylinder_test.h5', 'r')
     with h5py.File(path_to_hf_file, 'r') as f:
         data = f['cylinder']
@@ -25,7 +25,6 @@ def main():
         # plt.figure('random')
         # plt.imshow(data, cmap='binary')
         plt.show()
-    return 2
 
 
 if __name__ == '__main__':
