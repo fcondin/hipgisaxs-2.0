@@ -8,7 +8,7 @@ try:
 except ImportError:
     import numpy as np
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from hipgisaxs import Unitcell
 from hipgisaxs.fresnel import propagation_coeffs
@@ -17,7 +17,6 @@ from hipgisaxs.detector import Detector
 
 if __name__ == '__main__':
 
-
     # load instrumentation specs
     if len(sys.argv) == 2:
         if os.path.isdir(sys.argv[1]):
@@ -25,8 +24,7 @@ if __name__ == '__main__':
     elif len(sys.argv):
         if os.path.isdir('json'):
             input_sdir = 'json'
-    
-    
+
     # read configurations
     instrument_config = os.path.join(input_sdir, 'instrument.json')
     if not os.path.isfile(instrument_config):
@@ -39,7 +37,7 @@ if __name__ == '__main__':
     if not os.path.isfile(sample_config):
         raise OSError('sample file not found')
     with open(sample_config) as fp:
-       sample = json.load(fp)
+        sample = json.load(fp)
 
     # output
     output_config = os.path.join(input_sdir, 'output.json')
@@ -48,7 +46,6 @@ if __name__ == '__main__':
     with open(output_config) as fp:
         output = json.load(fp)
 
-
     alphai = cfg['incident_angle'] * np.pi / 180
     sdd = cfg['sdd']
     energy = cfg['energy'] 
@@ -56,7 +53,6 @@ if __name__ == '__main__':
     detector = Detector.from_dict(cfg['detector'])
     beam_center = cfg['beam_center'] 
 
-    
     # substrate
     substrate = sample['substrate']
     reflectivity_index = complex(substrate['delta'], substrate['beta'])
@@ -69,10 +65,9 @@ if __name__ == '__main__':
     propagation = propagation_coeffs(alphai, alpha.ravel(), reflectivity_index)
 
     # struture factor
-    dspacing = np.array([[200, 0, 0],[0, 200, 0],[0, 0, 1]]) 
+    dspacing = np.array([[200, 0, 0], [0, 200, 0], [0, 0, 1]])
     repeats = np.array([500, 500, 1])
 
-   
     # DWBA
     scat = np.zeros_like(qx, dtype=complex)
     for j in range(4):
@@ -91,7 +86,7 @@ if __name__ == '__main__':
     fname = output['filename']
     fp = h5py.File(fname, 'w')
     dsetname = output['dataset']
-    dset = fp.create_dataset(dsetname, data = img)
+    dset = fp.create_dataset(dsetname, data=img)
     qp = np.sign(qy) * np.sqrt(qx**2 + qy**2)
     qv = qz[0]
     if np.__name__ == 'cupy':
